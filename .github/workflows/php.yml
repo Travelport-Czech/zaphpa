@@ -1,0 +1,23 @@
+name: PHP Lint
+
+on:
+  push:
+    branches: [ v2.x, phplint ]
+  pull_request:
+    branches: [ v2.x ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Php lint
+      uses: overtrue/phplint@8.0
+      with:
+        path: .
+        options: --exclude=*.log
+    - name: OSKAR-phpstan
+      uses: OskarStark/phpstan-ga@0.12.88.1
+      with:
+        args: analyse --level 1 src/
